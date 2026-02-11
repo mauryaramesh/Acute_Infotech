@@ -1,5 +1,4 @@
 .navbar {
-  background-color: #f8f9fa;
   padding: 1rem 0;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -46,6 +45,22 @@
 
 .navbar-menu a:hover {
   color: #007bff;
+}
+
+.navbar-button {
+  background-color: #007bff;
+  color: white !important;
+  padding: 0.5rem 1.5rem;
+  border-radius: 25px;
+  border: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.navbar-button:hover {
+  background-color: #0056b3 !important;
+  color: white !important;
+  transform: translateY(-2px);
 }
 
 @media (max-width: 768px) {
