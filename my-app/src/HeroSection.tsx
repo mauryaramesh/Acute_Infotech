@@ -2,7 +2,7 @@
 
 import React from "react";
 import "./HeroSection.css";
-import logo from './assets/images/actute_hime_right.png';
+import logo from './assets/images/acute_right_1.png';
 
 const HeroSection: React.FC = () => {
   return (
