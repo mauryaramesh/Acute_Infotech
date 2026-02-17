@@ -10,7 +10,7 @@ export default function Navbar() {
   const servicesData = {
     "SOFTWARE DEVELOPMENT": [
       "Mobile Applications",
-      "Web Applications", 
+      "Web Applications",
       "DevOps",
       "Blockchain",
       "Cloud",
@@ -85,9 +85,9 @@ export default function Navbar() {
       <div className="navbar-container">
         {/* Left Side - Image */}
         <div className="navbar-left">
-          <img 
-            src={logo.src} 
-            alt="Acute InfoSoft Logo" 
+          <img
+            src={logo.src}
+            alt="Acute InfoSoft Logo"
             className="navbar-logo"
           />
         </div>
@@ -96,8 +96,8 @@ export default function Navbar() {
         <div className="navbar-right">
           <ul className="navbar-menu">
             <li><a href="/">Home</a></li>
-            <li><a href="/about">About</a></li>
-            <li 
+            <li><a href="/about-us">About</a></li>
+            <li
               className="services-dropdown"
               onMouseEnter={() => setIsServicesHovered(true)}
               onMouseLeave={() => setIsServicesHovered(false)}
