@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
 const technologies = [
     { name: "Azure", logo: "https://upload.wikimedia.org/wikipedia/commons/f/fa/Microsoft_Azure.svg" },
@@ -17,13 +17,45 @@ const technologies = [
     { name: "Oracle", logo: "https://upload.wikimedia.org/wikipedia/commons/5/50/Oracle_logo.svg" },
 ];
 
+// Scroll reveal hook
+function useScrollReveal() {
+    const ref = useRef<HTMLElement>(null);
+
+    useEffect(() => {
+        const el = ref.current;
+        if (!el) return;
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        el.classList.add('tech-section-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            },
+            { threshold: 0.15 }
+        );
+
+        observer.observe(el);
+        return () => observer.disconnect();
+    }, []);
+
+    return ref;
+}
+
 const TechStackMarquee: React.FC = () => {
     // Duplicate the array to create a seamless loop
     const row1 = [...technologies, ...technologies];
     const row2 = [...technologies, ...technologies].reverse();
 
+    const sectionRef = useScrollReveal();
+
     return (
-        <section className="py-24 bg-gray-50 overflow-hidden">
+        <section
+            ref={sectionRef}
+            className="bg-gray-50 overflow-hidden tech-section-hidden"
+        >
             <div className="container mx-auto px-4 mb-16 text-center">
                 <h2 className="text-4xl font-bold text-gray-900 mb-4">
                     Technologies We Work With
@@ -34,20 +66,24 @@ const TechStackMarquee: React.FC = () => {
             </div>
 
             <div className="flex flex-col gap-8">
-                {/* Row 1 - Left to Right (Technically Right because of Scroll) */}
+                {/* Row 1 - Left to Right */}
                 <div className="relative w-full overflow-hidden">
                     <div className="flex gap-6 w-max animate-scroll pause-on-hover">
                         {row1.map((tech, index) => (
                             <div
                                 key={`row1-${index}`}
-                                className="flex flex-col items-center justify-center w-[200px] h-[120px] bg-white rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow duration-300"
+                                className="group flex flex-col items-center justify-center w-[200px] h-[120px] bg-white rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-lg hover:border-blue-200 transition-all duration-300 relative overflow-hidden"
                             >
+                                {/* Glow effect on hover */}
+                                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                                    style={{ background: 'radial-gradient(circle at center, rgba(0,123,255,0.06) 0%, transparent 70%)' }}
+                                />
                                 <img
                                     src={tech.logo}
                                     alt={tech.name}
-                                    className="h-12 w-auto object-contain mb-3 grayscale hover:grayscale-0 transition-all duration-300"
+                                    className="h-12 w-auto object-contain mb-3 grayscale hover:grayscale-0 transition-all duration-300 group-hover:scale-110"
                                 />
-                                <span className="text-sm font-medium text-gray-400">{tech.name}</span>
+                                <span className="text-sm font-medium text-gray-400 group-hover:text-blue-600 transition-colors duration-300">{tech.name}</span>
                             </div>
                         ))}
                     </div>
@@ -59,19 +95,37 @@ const TechStackMarquee: React.FC = () => {
                         {row2.map((tech, index) => (
                             <div
                                 key={`row2-${index}`}
-                                className="flex flex-col items-center justify-center w-[200px] h-[120px] bg-white rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow duration-300"
+                                className="group flex flex-col items-center justify-center w-[200px] h-[120px] bg-white rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-lg hover:border-blue-200 transition-all duration-300 relative overflow-hidden"
                             >
+                                {/* Glow effect on hover */}
+                                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                                    style={{ background: 'radial-gradient(circle at center, rgba(0,123,255,0.06) 0%, transparent 70%)' }}
+                                />
                                 <img
                                     src={tech.logo}
                                     alt={tech.name}
-                                    className="h-12 w-auto object-contain mb-3 grayscale hover:grayscale-0 transition-all duration-300"
+                                    className="h-12 w-auto object-contain mb-3 grayscale hover:grayscale-0 transition-all duration-300 group-hover:scale-110"
                                 />
-                                <span className="text-sm font-medium text-gray-400">{tech.name}</span>
+                                <span className="text-sm font-medium text-gray-400 group-hover:text-blue-600 transition-colors duration-300">{tech.name}</span>
                             </div>
                         ))}
                     </div>
                 </div>
             </div>
+
+            {/* Inline style for section fade-in */}
+            <style jsx>{`
+                .tech-section-hidden {
+                    opacity: 0;
+                    transform: translateY(30px);
+                    transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
+                                transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+                }
+                .tech-section-visible {
+                    opacity: 1 !important;
+                    transform: translateY(0) !important;
+                }
+            `}</style>
         </section>
     );
 };

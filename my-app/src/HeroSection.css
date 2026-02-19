@@ -1,12 +1,95 @@
 .hero-section {
   position: relative;
-  height: 100vh; 
+  height: 100vh;
   width: 100%;
   overflow: hidden;
   margin-top: 0;
   background-color: white;
   font-family: 'Inter', sans-serif;
 }
+
+/* ── Floating Particles ── */
+.hero-particles {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.hero-particle {
+  position: absolute;
+  bottom: -10px;
+  border-radius: 50%;
+  background: rgba(0, 123, 255, 0.25);
+  animation: particle-drift linear infinite;
+  will-change: transform, opacity;
+}
+
+/* ── Circuit-board lines ── */
+.hero-circuit-lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ── Glowing orb ── */
+.hero-glow-orb {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 123, 255, 0.18) 0%, transparent 70%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ── Typing cursor ── */
+.hero-cursor {
+  color: #007bff;
+  font-weight: 300;
+  margin-left: 2px;
+}
+
+/* ── Staggered entrance animations ── */
+.hero-pre-animate {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.hero-animate-in {
+  animation: heroFadeInUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.hero-delay-1 {
+  animation-delay: 0.25s;
+  opacity: 0;
+}
+
+.hero-delay-2 {
+  animation-delay: 0.5s;
+  opacity: 0;
+}
+
+@keyframes heroFadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Existing styles (preserved) ── */
 
 .hero-background-static {
   position: absolute;
@@ -26,7 +109,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5); /* Dark overlay */
+  background: rgba(0, 0, 0, 0.5);
   z-index: 2;
 }
 
@@ -92,6 +175,24 @@
   text-decoration: none;
   display: inline-block;
   font-family: 'Inter', sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Button shimmer sweep on hover */
+.hero-button::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+  transition: left 0.5s ease;
+}
+
+.hero-button:hover::after {
+  left: 100%;
 }
 
 .hero-button:hover {
@@ -102,40 +203,6 @@
   text-decoration: none;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-  .hero-section {
-    height: 120vh; /* Slightly taller on mobile */
-  }
-  
-  .hero-title {
-    font-size: 2.5rem;
-  }
-  
-  .hero-subtitle {
-    font-size: 1rem;
-  }
-  
-  .hero-button {
-    padding: 0.8rem 2rem;
-    font-size: 1rem;
-  }
-  
-  .hero-content {
-    padding: 0 1rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .hero-title {
-    font-size: 2rem;
-  }
-  
-  .hero-button {
-    padding: 0.7rem 1.5rem;
-    font-size: 0.9rem;
-  }
-}
 .hero-container {
   width: 90%;
   max-width: 1200px;
@@ -143,6 +210,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: relative;
+  z-index: 2;
 }
 
 .hero-left,
@@ -150,9 +219,59 @@
   width: 50%;
 }
 
+.hero-right {
+  position: relative;
+}
+
 .hero-image {
   width: 100%;
   height: auto;
   background: transparent;
   background-color: transparent;
+  position: relative;
+  z-index: 1;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .hero-section {
+    height: 120vh;
+  }
+
+  .hero-title {
+    font-size: 2.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+
+  .hero-button {
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+  }
+
+  .hero-content {
+    padding: 0 1rem;
+  }
+
+  .hero-circuit-lines {
+    display: none;
+  }
+
+  .hero-glow-orb {
+    width: 200px;
+    height: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .hero-button {
+    padding: 0.7rem 1.5rem;
+    font-size: 0.9rem;
+  }
 }
