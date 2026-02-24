@@ -53,74 +53,30 @@ const testimonials = [
     },
 ];
 
-// Scroll reveal hook
-function useScrollReveal() {
-    const ref = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        const el = ref.current;
-        if (!el) return;
-
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        const children = el.querySelectorAll('.scroll-reveal, .scroll-reveal-scale');
-                        children.forEach((child, i) => {
-                            setTimeout(() => {
-                                child.classList.add('revealed');
-                            }, i * 120);
-                        });
-                        observer.unobserve(entry.target);
-                    }
-                });
-            },
-            { threshold: 0.1 }
-        );
-
-        observer.observe(el);
-        return () => observer.disconnect();
-    }, []);
-
-    return ref;
-}
-
-// 3D tilt card hook
-function useCardTilt() {
-    const [tilt, setTilt] = useState({ x: 0, y: 0 });
-
-    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-        const rect = e.currentTarget.getBoundingClientRect();
-        const x = ((e.clientX - rect.left) / rect.width - 0.5) * 10;
-        const y = ((e.clientY - rect.top) / rect.height - 0.5) * -10;
-        setTilt({ x, y });
-    };
-
-    const handleMouseLeave = () => {
-        setTilt({ x: 0, y: 0 });
-    };
-
-    return { tilt, handleMouseMove, handleMouseLeave };
-}
-
 const ClientFeedback: React.FC = () => {
-    const sectionRef = useScrollReveal();
-
     return (
-        <section className="bg-white">
-            <div className="max-w-[1200px] mx-auto px-8" ref={sectionRef}>
+        <section className="bg-white py-24 md:py-32 border-t-4 border-black relative overflow-hidden">
+            {/* 2D Decorative Dots */}
+            <div className="absolute top-10 left-10 w-32 h-32 opacity-[0.05] pointer-events-none"
+                style={{
+                    backgroundImage: 'radial-gradient(#000 3px, transparent 3px)',
+                    backgroundSize: '20px 20px'
+                }}
+            />
+
+            <div className="max-w-[1200px] mx-auto px-8 relative z-10">
                 <div className="text-center mb-16">
-                    <h2 className="text-4xl font-bold text-gray-900 mb-4 scroll-reveal">
-                        What Our Clients Say
+                    <h2 className="text-4xl lg:text-6xl font-black text-black mb-6 leading-tight uppercase tracking-tighter">
+                        What Our <span className="text-blue-600 underline decoration-black decoration-4 underline-offset-8">Clients Say</span>
                     </h2>
-                    <p className="text-lg text-gray-600 max-w-2xl mx-auto scroll-reveal">
+                    <p className="text-xl text-gray-700 max-w-2xl mx-auto font-medium">
                         Don't just take our word for it. Here is what some of our partners have to say about working with us.
                     </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {testimonials.map((testimonial, index) => (
-                        <TestimonialCard key={testimonial.id} testimonial={testimonial} index={index} />
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+                    {testimonials.map((testimonial) => (
+                        <TestimonialCard key={testimonial.id} testimonial={testimonial} />
                     ))}
                 </div>
             </div>
@@ -128,44 +84,31 @@ const ClientFeedback: React.FC = () => {
     );
 };
 
-// Separate card component for individual tilt
-function TestimonialCard({ testimonial, index }: { testimonial: typeof testimonials[0]; index: number }) {
-    const { tilt, handleMouseMove, handleMouseLeave } = useCardTilt();
-
+// Separate card component
+function TestimonialCard({ testimonial }: { testimonial: typeof testimonials[0] }) {
     return (
-        <div
-            className="scroll-reveal-scale perspective-card"
-            style={{ transitionDelay: `${index * 100}ms` }}
-        >
-            <div
-                className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 flex flex-col justify-between h-full cursor-default"
-                style={{
-                    transform: `rotateY(${tilt.x}deg) rotateX(${tilt.y}deg)`,
-                    transition: tilt.x === 0 && tilt.y === 0 ? 'transform 0.5s ease-out, box-shadow 0.3s' : 'box-shadow 0.3s',
-                }}
-                onMouseMove={handleMouseMove}
-                onMouseLeave={handleMouseLeave}
-            >
+        <div className="perspective-card">
+            <div className="neo-card p-10 flex flex-col justify-between h-full cursor-default bg-white">
                 <div>
-                    <div className="flex items-center mb-6">
+                    <div className="flex items-center mb-8">
                         <img
-                            className="w-16 h-16 rounded-full object-cover mr-4 border-2 border-blue-100"
+                            className="w-20 h-20 border-4 border-black neo-shadow-sm object-cover mr-6 grayscale hover:grayscale-0 transition-all duration-300"
                             src={testimonial.avatar}
                             alt={testimonial.name}
                         />
                         <div>
-                            <h4 className="text-lg font-bold text-gray-900 leading-tight">
+                            <h4 className="text-xl font-black text-black leading-tight uppercase tracking-tight">
                                 {testimonial.name}
                             </h4>
-                            <p className="text-sm text-gray-500 mt-1">
+                            <p className="text-sm font-bold text-blue-600 mt-1 uppercase tracking-widest">
                                 {testimonial.role || "Client"}
                             </p>
                         </div>
                     </div>
 
-                    <div className="mb-4">
+                    <div className="mb-6">
                         <svg
-                            className="w-8 h-8 text-blue-400 mb-2 opacity-80"
+                            className="w-10 h-10 text-black mb-2 opacity-100"
                             fill="currentColor"
                             viewBox="0 0 24 24"
                             aria-hidden="true"
@@ -174,8 +117,8 @@ function TestimonialCard({ testimonial, index }: { testimonial: typeof testimoni
                         </svg>
                     </div>
 
-                    <p className="text-gray-700 text-base leading-relaxed">
-                        {testimonial.feedback}
+                    <p className="text-gray-800 text-lg font-medium leading-relaxed">
+                        "{testimonial.feedback}"
                     </p>
                 </div>
             </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 const steps = [
     {
@@ -117,109 +117,91 @@ function useScrollReveal() {
 }
 
 const WorkingProcess: React.FC = () => {
-    const sectionRef = useScrollReveal();
-
     return (
-        <section className="bg-white relative overflow-hidden">
-            {/* Background Decorative Blob */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-gradient-to-b from-blue-50/30 to-transparent pointer-events-none -z-10" />
-
-            {/* Animated gradient accent */}
-            <div
-                className="absolute -top-40 -right-40 w-[500px] h-[500px] rounded-full pointer-events-none -z-10 animate-pulse-glow"
-                style={{ background: 'radial-gradient(circle, rgba(0,123,255,0.06) 0%, transparent 70%)' }}
+        <section className="bg-white relative overflow-hidden py-24 md:py-32 border-t-4 border-black">
+            {/* Background Decorative Elements - Static */}
+            <div className="absolute top-0 left-0 w-full h-full opacity-[0.02] pointer-events-none -z-10"
+                style={{
+                    backgroundImage: 'radial-gradient(#000 2px, transparent 2px)',
+                    backgroundSize: '30px 30px'
+                }}
             />
 
-            <div className="max-w-[1200px] mx-auto px-8" ref={sectionRef}>
+            <div className="max-w-[1200px] mx-auto px-8">
                 <div className="flex flex-col items-center text-center mb-16">
-                    <span className="text-blue-600 font-medium py-1 px-3 text-sm rounded-full border border-blue-100 bg-blue-50 mb-4 scroll-reveal">
+                    <span className="text-black font-bold py-1.5 px-4 text-xs rounded-none border-2 border-black bg-blue-300 mb-4 neo-shadow-sm uppercase tracking-tighter">
                         Working Process
                     </span>
-                    <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6 scroll-reveal">
-                        Our Approach to Success
+                    <h2 className="text-4xl lg:text-6xl font-black text-black mb-6 leading-tight">
+                        Our Approach <span className="text-blue-600 underline decoration-black decoration-4 underline-offset-8">to Success</span>
                     </h2>
-                    <p className="text-gray-500 max-w-lg text-lg scroll-reveal">
+                    <p className="text-gray-700 max-w-lg text-xl font-medium">
                         We follow a structured, step-by-step approach to deliver efficient and tailored IT solutions.
                     </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative items-start">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 relative items-start">
 
-                    {/* Connecting Lines for Desktop */}
-                    <div className="hidden lg:block absolute inset-0 pointer-events-none">
+                    {/* Connecting Lines for Desktop - Static */}
+                    <div className="hidden lg:block absolute inset-0 pointer-events-none opacity-20">
                         {/* 1->2 */}
-                        <svg className="absolute top-[80px] left-[20%] w-[10%] h-[20px] text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 100 10">
-                            <path strokeDasharray="6 4" strokeWidth="2" d="M0 5 H100">
-                                <animate attributeName="stroke-dashoffset" from="0" to="-20" dur="1.5s" repeatCount="indefinite" />
-                            </path>
+                        <svg className="absolute top-[80px] left-[20%] w-[10%] h-[20px] text-black" fill="none" stroke="currentColor" viewBox="0 0 100 10">
+                            <path strokeDasharray="0" strokeWidth="4" d="M0 5 H100" />
                             <path fill="currentColor" d="M95 0 L100 5 L95 10 Z" />
                         </svg>
                         {/* 2->3 */}
-                        <svg className="absolute top-[80px] left-[45%] w-[10%] h-[20px] text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 100 10">
-                            <path strokeDasharray="6 4" strokeWidth="2" d="M0 5 H100">
-                                <animate attributeName="stroke-dashoffset" from="0" to="-20" dur="1.5s" repeatCount="indefinite" />
-                            </path>
+                        <svg className="absolute top-[80px] left-[45%] w-[10%] h-[20px] text-black" fill="none" stroke="currentColor" viewBox="0 0 100 10">
+                            <path strokeDasharray="0" strokeWidth="4" d="M0 5 H100" />
                             <path fill="currentColor" d="M95 0 L100 5 L95 10 Z" />
                         </svg>
                         {/* 3->4 */}
-                        <svg className="absolute top-[80px] left-[70%] w-[10%] h-[20px] text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 100 10">
-                            <path strokeDasharray="6 4" strokeWidth="2" d="M0 5 H100">
-                                <animate attributeName="stroke-dashoffset" from="0" to="-20" dur="1.5s" repeatCount="indefinite" />
-                            </path>
+                        <svg className="absolute top-[80px] left-[70%] w-[10%] h-[20px] text-black" fill="none" stroke="currentColor" viewBox="0 0 100 10">
+                            <path strokeDasharray="0" strokeWidth="4" d="M0 5 H100" />
                             <path fill="currentColor" d="M95 0 L100 5 L95 10 Z" />
                         </svg>
 
                         {/* 4->5 (Down) */}
-                        <svg className="absolute top-[180px] right-[10%] w-[20px] h-[80px] text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 10 100">
-                            <path strokeDasharray="6 4" strokeWidth="2" d="M5 0 V100">
-                                <animate attributeName="stroke-dashoffset" from="0" to="-20" dur="1.5s" repeatCount="indefinite" />
-                            </path>
+                        <svg className="absolute top-[180px] right-[10%] w-[20px] h-[80px] text-black" fill="none" stroke="currentColor" viewBox="0 0 10 100">
+                            <path strokeDasharray="0" strokeWidth="4" d="M5 0 V100" />
                             <path fill="currentColor" d="M0 95 L5 100 L10 95 Z" />
                         </svg>
 
                         {/* 5->6 (Left) */}
-                        <svg className="absolute bottom-[100px] left-[70%] w-[10%] h-[20px] text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 100 10">
-                            <path strokeDasharray="6 4" strokeWidth="2" d="M100 5 H0">
-                                <animate attributeName="stroke-dashoffset" from="0" to="20" dur="1.5s" repeatCount="indefinite" />
-                            </path>
+                        <svg className="absolute bottom-[100px] left-[70%] w-[10%] h-[20px] text-black" fill="none" stroke="currentColor" viewBox="0 0 100 10">
+                            <path strokeDasharray="0" strokeWidth="4" d="M100 5 H0" />
                             <path fill="currentColor" d="M5 0 L0 5 L5 10 Z" />
                         </svg>
                         {/* 6->7 (Left) */}
-                        <svg className="absolute bottom-[100px] left-[45%] w-[10%] h-[20px] text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 100 10">
-                            <path strokeDasharray="6 4" strokeWidth="2" d="M100 5 H0">
-                                <animate attributeName="stroke-dashoffset" from="0" to="20" dur="1.5s" repeatCount="indefinite" />
-                            </path>
+                        <svg className="absolute bottom-[100px] left-[45%] w-[10%] h-[20px] text-black" fill="none" stroke="currentColor" viewBox="0 0 100 10">
+                            <path strokeDasharray="0" strokeWidth="4" d="M100 5 H0" />
                             <path fill="currentColor" d="M5 0 L0 5 L5 10 Z" />
                         </svg>
 
                         {/* 7->1 (Up and Left Curve) */}
-                        <svg className="absolute bottom-[180px] left-[20%] w-[60px] h-[100px] text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 60 100">
-                            <path strokeDasharray="6 4" strokeWidth="2" d="M30 100 V50 Q30 0 0 20">
-                                <animate attributeName="stroke-dashoffset" from="0" to="20" dur="1.5s" repeatCount="indefinite" />
-                            </path>
+                        <svg className="absolute bottom-[180px] left-[20%] w-[60px] h-[100px] text-black" fill="none" stroke="currentColor" viewBox="0 0 60 100">
+                            <path strokeDasharray="0" strokeWidth="4" d="M30 100 V50 Q30 0 0 20" />
                             <path fill="currentColor" d="M5 15 L0 20 L5 25 Z" />
                         </svg>
                     </div>
 
-                    {steps.map((step, index) => (
+                    {steps.map((step) => (
                         <div
                             key={step.id}
-                            className={`group bg-white border border-gray-100 rounded-[2rem] p-8 hover:shadow-xl hover:border-blue-200 transition-all duration-300 flex flex-col items-start h-full min-h-[280px] relative z-10 ${step.colSpan} scroll-reveal`}
-                            style={{ transitionDelay: `${index * 80}ms` }}
+                            className={`group neo-card p-10 flex flex-col items-start h-full min-h-[300px] relative z-10 ${step.colSpan}`}
                         >
-                            <div className="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center mb-6 text-blue-600 group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300 group-hover:shadow-lg group-hover:shadow-blue-200">
+                            <div className="w-16 h-16 bg-white border-4 border-black neo-shadow-sm flex items-center justify-center mb-8 text-black group-hover:bg-blue-300 transition-all duration-300">
                                 {step.icon}
                             </div>
 
                             {/* Step number badge */}
-                            <span className="absolute top-4 right-4 w-8 h-8 rounded-full bg-blue-50 text-blue-600 text-xs font-bold flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
+                            <span className="absolute top-4 right-4 w-10 h-10 border-4 border-black bg-white text-black text-sm font-black flex items-center justify-center neo-shadow-sm group-hover:bg-blue-600 group-hover:text-white transition-all duration-300 translate-x-2 -translate-y-2">
                                 {step.id}
                             </span>
 
-                            <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">
+                            <h3 className="text-2xl font-black text-black mb-4 group-hover:text-blue-600 transition-colors decoration-2 underline decoration-transparent group-hover:decoration-blue-600 underline-offset-4">
                                 {step.title}
                             </h3>
-                            <p className="text-gray-500 leading-relaxed text-sm">
+                            <p className="text-gray-700 font-medium leading-relaxed text-sm">
                                 {step.description}
                             </p>
                         </div>
@@ -229,5 +211,6 @@ const WorkingProcess: React.FC = () => {
         </section>
     );
 };
+
 
 export default WorkingProcess;
