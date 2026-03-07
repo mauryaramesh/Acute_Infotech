@@ -274,6 +274,13 @@ const IndustriesSection: React.FC = () => {
         </div>
 
       </div>
+       {/* Scroll Indicator */}
+      <div className="hero-scroll-indicator">
+        <div className="hero-scroll-mouse">
+          <div className="hero-scroll-wheel" />
+        </div>
+        <span>Scroll to explore</span>
+      </div>
     </section>
   );
 };
