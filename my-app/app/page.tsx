@@ -10,9 +10,9 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col">
       <HeroSection />
-      {/* <AISolutions />
+     
       <WorkingProcess />
-      <BuildProduct />
+      {/* <BuildProduct />
       <ClientFeedback />
       <TechStackMarquee /> */}
     </div>

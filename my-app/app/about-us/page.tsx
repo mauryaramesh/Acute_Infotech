@@ -1,17 +1,14 @@
 import React from 'react';
-import Navbar from '@/src/Navbar';
-import AboutUsHero from '@/src/AboutUsHero';
-import AboutUsStats from '@/src/AboutUsStats';
-import AboutUsStory from '@/src/AboutUsStory';
-import ClientFeedback from '@/src/ClientFeedback';
+import AboutUsHero from './AboutUsHero';
+import AboutUsIntro from './AboutUsIntro';
+import AboutUsTeam from './AboutUsTeam';
 
-export default function AboutUs() {
+export default function AboutUsPage() {
     return (
-        <div className="bg-white min-h-screen">
-            <main>
-
-            </main>
-
+        <div className="min-h-screen flex flex-col">
+            <AboutUsHero />
+            <AboutUsIntro />
+            <AboutUsTeam />
         </div>
     );
 }
