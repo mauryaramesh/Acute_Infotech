@@ -12,8 +12,10 @@ export default function Home() {
       <HeroSection />
      
       <WorkingProcess />
-      {/* <BuildProduct />
-      <ClientFeedback />
+       <BuildProduct />
+       <ClientFeedback />
+      {/*
+      
       <TechStackMarquee /> */}
     </div>
   );

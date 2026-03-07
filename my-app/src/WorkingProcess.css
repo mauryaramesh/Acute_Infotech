@@ -1,507 +1,404 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;700;800&family=Syne:wght@700;800;900&display=swap');
 
-/* ──────────────────────────────────────────────────────────────
-   VARIABLES  (mirror HeroSection tokens)
-────────────────────────────────────────────────────────────── */
+/* ─────────────────────────────────────────────
+   TOKENS
+───────────────────────────────────────────── */
 :root {
-  --wp-cyan:         #00f2ff;
-  --wp-blue:         #007bff;
-  --wp-purple:       #7000ff;
-  --wp-bg:           #000000;
-  --wp-card-bg:      rgba(255, 255, 255, 0.03);
-  --wp-border:       rgba(255, 255, 255, 0.07);
-  --wp-border-hover: rgba(0, 242, 255, 0.45);
-  --wp-text:         #ffffff;
-  --wp-muted:        rgba(255, 255, 255, 0.5);
-  --wp-font-display: 'Syne', sans-serif;
-  --wp-font-body:    'Space Grotesk', sans-serif;
+  --wp-cyan:    #00f2ff;
+  --wp-blue:    #007bff;
+  --wp-purple:  #7000ff;
+  --wp-text:    #ffffff;
+  --wp-muted:   rgba(255,255,255,0.50);
+  --wp-card-bg: rgba(8,16,36,0.7);
+  --wp-border:  rgba(255,255,255,0.07);
+  --wp-fd:      'Syne', sans-serif;
+  --wp-fb:      'Space Grotesk', sans-serif;
 }
 
-/* ──────────────────────────────────────────────────────────────
-   SECTION BASE
-────────────────────────────────────────────────────────────── */
+/* ─────────────────────────────────────────────
+   SECTION
+───────────────────────────────────────────── */
 .wp-section {
   position: relative;
   overflow: hidden;
   padding: 8rem 0 9rem;
   background: radial-gradient(ellipse 100% 60% at 50% 0%, #040c1f 0%, #000000 60%);
-  border-top: 1px solid rgba(0, 242, 255, 0.08);
-  font-family: var(--wp-font-body);
+  border-top: 1px solid rgba(0,242,255,0.08);
+  font-family: var(--wp-fb);
 }
 
-/* ──────────────────────────────────────────────────────────────
-   BACKGROUND LAYERS
-────────────────────────────────────────────────────────────── */
+/* ─────────────────────────────────────────────
+   BACKGROUNDS
+───────────────────────────────────────────── */
 .wp-bg-grid {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background-image: radial-gradient(circle, rgba(0, 242, 255, 0.055) 1px, transparent 1px);
+  position: absolute; inset: 0;
+  pointer-events: none; z-index: 0;
+  background-image: radial-gradient(circle, rgba(0,242,255,0.055) 1px, transparent 1px);
   background-size: 44px 44px;
   mask-image: radial-gradient(ellipse 90% 90% at 50% 50%, black 20%, transparent 100%);
-  z-index: 0;
 }
-
 .wp-noise {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
+  position: absolute; inset: 0; z-index: 1; pointer-events: none;
   opacity: 0.022;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 200px 200px;
 }
-
 .wp-scanlines {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  background: repeating-linear-gradient(
-    to bottom,
-    transparent,
-    transparent 3px,
-    rgba(0, 242, 255, 0.01) 3px,
-    rgba(0, 242, 255, 0.01) 4px
-  );
+  position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: repeating-linear-gradient(to bottom, transparent, transparent 3px, rgba(0,242,255,0.01) 3px, rgba(0,242,255,0.01) 4px);
   animation: wp-scan 12s linear infinite;
 }
 @keyframes wp-scan {
   from { background-position: 0 0; }
   to   { background-position: 0 120px; }
 }
-
 .wp-bg-blob {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(140px);
-  pointer-events: none;
-  z-index: 0;
+  position: absolute; border-radius: 50%;
+  filter: blur(140px); pointer-events: none; z-index: 0;
 }
 .wp-blob-1 {
   width: 50vw; height: 50vw;
-  background: radial-gradient(circle, rgba(0, 123, 255, 0.18), transparent 70%);
+  background: radial-gradient(circle, rgba(0,123,255,0.18), transparent 70%);
   top: -10%; left: -10%;
   animation: wp-blob 24s ease-in-out infinite alternate;
 }
 .wp-blob-2 {
   width: 40vw; height: 40vw;
-  background: radial-gradient(circle, rgba(112, 0, 255, 0.14), transparent 70%);
+  background: radial-gradient(circle, rgba(112,0,255,0.14), transparent 70%);
   bottom: -5%; right: -5%;
   animation: wp-blob 30s ease-in-out infinite alternate-reverse;
 }
 @keyframes wp-blob {
-  from { transform: translate(0, 0) scale(1); }
-  to   { transform: translate(6%, 8%) scale(1.08); }
+  from { transform: translate(0,0) scale(1); }
+  to   { transform: translate(6%,8%) scale(1.08); }
 }
 
-/* ──────────────────────────────────────────────────────────────
+/* ─────────────────────────────────────────────
    CONTAINER
-────────────────────────────────────────────────────────────── */
+───────────────────────────────────────────── */
 .wp-container {
-  position: relative;
-  z-index: 2;
+  position: relative; z-index: 2;
   max-width: 1240px;
   margin: 0 auto;
   padding: 0 2rem;
 }
 
-/* ──────────────────────────────────────────────────────────────
+/* ─────────────────────────────────────────────
    SCROLL REVEAL
-────────────────────────────────────────────────────────────── */
+───────────────────────────────────────────── */
 .wp-reveal {
   opacity: 0;
   transform: translateY(32px);
-  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1),
+              transform 0.8s cubic-bezier(0.16,1,0.3,1);
 }
-.wp-revealed {
-  opacity: 1;
-  transform: translateY(0);
-}
+.wp-revealed { opacity: 1; transform: translateY(0); }
 
-/* ──────────────────────────────────────────────────────────────
+/* ─────────────────────────────────────────────
    HEADER
-────────────────────────────────────────────────────────────── */
+───────────────────────────────────────────── */
 .wp-header {
   text-align: center;
-  margin-bottom: 5rem;
+  margin-bottom: 4.5rem;
 }
-
 .wp-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
+  display: inline-flex; align-items: center; gap: 8px;
   padding: 7px 18px;
-  background: rgba(0, 242, 255, 0.06);
-  border: 1px solid rgba(0, 242, 255, 0.22);
+  background: rgba(0,242,255,0.06);
+  border: 1px solid rgba(0,242,255,0.22);
   border-radius: 999px;
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: rgba(0, 242, 255, 0.9);
-  margin-bottom: 1.6rem;
+  font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: rgba(0,242,255,0.9);
+  margin-bottom: 1.5rem;
   backdrop-filter: blur(8px);
 }
 .wp-eyebrow-dot {
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: var(--wp-cyan);
-  box-shadow: 0 0 8px var(--wp-cyan);
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--wp-cyan); box-shadow: 0 0 8px var(--wp-cyan);
   animation: wp-pulse 1.6s ease-in-out infinite;
 }
 @keyframes wp-pulse {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50%       { transform: scale(1.7); opacity: 0.5; }
+  0%,100% { transform: scale(1); opacity: 1; }
+  50%     { transform: scale(1.7); opacity: 0.5; }
 }
-
 .wp-heading {
-  font-family: var(--wp-font-display);
+  font-family: var(--wp-fd);
   font-size: clamp(1.9rem, 3.5vw, 3rem);
-  font-weight: 900;
-  color: var(--wp-text);
-  letter-spacing: -0.03em;
-  line-height: 1.1;
-  margin-bottom: 1.2rem;
+  font-weight: 900; letter-spacing: -0.03em; line-height: 1.1;
+  color: var(--wp-text); margin-bottom: 1.1rem;
 }
 .wp-heading-accent {
   background: linear-gradient(100deg, var(--wp-cyan) 0%, #4da6ff 50%, var(--wp-purple) 100%);
   background-size: 300% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
+  -webkit-background-clip: text; background-clip: text;
   -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 18px rgba(0,242,255,0.3));
   animation: wp-grad 5s ease infinite;
-  filter: drop-shadow(0 0 18px rgba(0, 242, 255, 0.3));
 }
 @keyframes wp-grad {
-  0%, 100% { background-position: 0% 50%; }
-  50%       { background-position: 100% 50%; }
+  0%,100% { background-position: 0% 50%; }
+  50%     { background-position: 100% 50%; }
 }
-
 .wp-subheading {
-  font-size: 1.05rem;
-  font-weight: 300;
-  line-height: 1.75;
-  color: var(--wp-muted);
-  max-width: 580px;
-  margin: 0 auto;
+  font-size: 1.05rem; font-weight: 300;
+  line-height: 1.75; color: var(--wp-muted);
+  max-width: 560px; margin: 0 auto;
 }
 
-/* ──────────────────────────────────────────────────────────────
+/* ─────────────────────────────────────────────
    GRID
-────────────────────────────────────────────────────────────── */
+───────────────────────────────────────────── */
 .wp-grid {
   display: grid;
-  grid-template-columns: repeat(1, 1fr);
-  gap: 1.5rem;
+  grid-template-columns: repeat(1,1fr);
+  gap: 1.4rem;
   position: relative;
 }
+@media (min-width: 640px)  { .wp-grid { grid-template-columns: repeat(2,1fr); } }
+@media (min-width: 1024px) { .wp-grid { grid-template-columns: repeat(4,1fr); } }
 
-@media (min-width: 640px) {
-  .wp-grid { grid-template-columns: repeat(2, 1fr); }
-}
-@media (min-width: 1024px) {
-  .wp-grid { grid-template-columns: repeat(4, 1fr); }
-}
+/* ─────────────────────────────────────────────
+   CARD OUTER
+───────────────────────────────────────────── */
+.wp-card-outer { position: relative; }
 
-/* ──────────────────────────────────────────────────────────────
-   CARD WRAPPER (holds connector)
-────────────────────────────────────────────────────────────── */
-.wp-card-wrap {
-  position: relative;
-}
-
-/* ──────────────────────────────────────────────────────────────
-   CONNECTOR ARROW  (desktop only, between cards in same row)
-────────────────────────────────────────────────────────────── */
+/* ─────────────────────────────────────────────
+   SVG CONNECTOR
+───────────────────────────────────────────── */
 .wp-connector {
   display: none;
   position: absolute;
-  right: -1.05rem;
-  top: 50%;
+  right: -1.05rem; top: 42%;
   transform: translateY(-50%);
   z-index: 10;
-  align-items: center;
-  flex-direction: column;
-  gap: 2px;
+  width: 60px; height: 20px;
 }
+@media (min-width: 1024px) { .wp-connector { display: block; } }
 
-@media (min-width: 1024px) {
-  .wp-connector { display: flex; }
-}
+.wp-conn-svg { width: 100%; height: 100%; overflow: visible; }
 
-.wp-connector-line {
-  width: 2px;
-  height: 28px;
-  background: linear-gradient(to bottom, transparent, rgba(0, 242, 255, 0.5), transparent);
-  border-radius: 1px;
-  opacity: 0;
-  transition: opacity 0.6s ease;
+.wp-conn-line {
+  stroke: rgba(0,242,255,0.12); stroke-width: 1.5;
+  stroke-dasharray: 5 4; fill: none;
+  transition: stroke 0.6s;
 }
-.wp-connector-arrow {
-  color: var(--wp-cyan);
-  font-size: 1.1rem;
-  line-height: 1;
-  opacity: 0;
-  transform: rotate(-90deg);
-  transition: opacity 0.6s ease 0.2s;
-  text-shadow: 0 0 8px var(--wp-cyan);
+.wp-connector.live .wp-conn-line {
+  stroke: rgba(0,242,255,0.35);
+  animation: wp-dash 1.6s linear infinite;
 }
-.wp-connector-live .wp-connector-line,
-.wp-connector-live .wp-connector-arrow {
-  opacity: 1;
-}
+@keyframes wp-dash { to { stroke-dashoffset: -18; } }
 
-/* ──────────────────────────────────────────────────────────────
-   CARD
-────────────────────────────────────────────────────────────── */
+.wp-conn-arrow {
+  stroke: rgba(0,242,255,0.4); stroke-width: 1.5;
+  fill: none; stroke-linecap: round; stroke-linejoin: round;
+  opacity: 0; transition: opacity 0.6s;
+}
+.wp-connector.live .wp-conn-arrow { opacity: 1; }
+
+.wp-conn-dot {
+  fill: var(--wp-cyan);
+  filter: drop-shadow(0 0 3px var(--wp-cyan));
+  opacity: 0; transition: opacity 0.6s;
+}
+.wp-connector.live .wp-conn-dot { opacity: 1; }
+
+/* ─────────────────────────────────────────────
+   CARD  — calm, subtle hover
+───────────────────────────────────────────── */
 .wp-card {
   position: relative;
   background: var(--wp-card-bg);
   border: 1px solid var(--wp-border);
   border-radius: 20px;
-  padding: 2rem 1.75rem 1.6rem;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  overflow: hidden;
-  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-              border-color 0.4s ease,
-              box-shadow 0.4s ease,
-              background 0.4s ease;
-  backdrop-filter: blur(12px);
+  padding: 1.8rem 1.6rem 1.4rem;
+  display: flex; flex-direction: column;
+  height: 100%; overflow: hidden;
+  backdrop-filter: blur(16px);
   cursor: default;
+  /* Only translateY + border fade — nothing jarring */
+  transition: transform 0.35s cubic-bezier(0.16,1,0.3,1),
+              border-color 0.35s ease,
+              box-shadow 0.35s ease;
+}
+.wp-card.active {
+  transform: translateY(-5px);
+  border-color: rgba(0,242,255,0.28);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3),
+              0 0 0 1px rgba(0,242,255,0.08);
 }
 
-.wp-card:hover,
-.wp-card.wp-card-active {
-  transform: translateY(-10px) scale(1.02);
-  border-color: var(--wp-border-hover);
-  background: rgba(0, 242, 255, 0.04);
-  box-shadow:
-    0 20px 50px rgba(0, 0, 0, 0.5),
-    0 0 30px rgba(0, 242, 255, 0.1),
-    inset 0 0 20px rgba(0, 242, 255, 0.03);
-}
-
-/* Top glowing accent line */
+/* Top glow line — very subtle */
 .wp-card-topline {
-  position: absolute;
-  top: 0; left: 20%; right: 20%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--wp-cyan), transparent);
-  border-radius: 0 0 4px 4px;
+  position: absolute; top: 0; left: 20%; right: 20%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0,242,255,0.5), transparent);
+  border-radius: 0 0 2px 2px;
   opacity: 0;
-  transition: opacity 0.4s ease, left 0.4s ease, right 0.4s ease;
+  transition: opacity 0.35s ease;
 }
-.wp-card:hover .wp-card-topline,
-.wp-card.wp-card-active .wp-card-topline {
-  opacity: 1;
-  left: 10%; right: 10%;
-}
+.wp-card.active .wp-card-topline { opacity: 1; }
 
-/* Step number */
-.wp-step-num {
-  position: absolute;
-  top: 1.4rem;
-  right: 1.4rem;
-  font-family: var(--wp-font-display);
-  font-size: 0.72rem;
-  font-weight: 900;
-  letter-spacing: 0.1em;
-  color: rgba(0, 242, 255, 0.18);
-  transition: color 0.3s ease, transform 0.3s ease;
+/* Large background number */
+.wp-bg-num {
+  position: absolute; bottom: -0.5rem; right: 0.8rem;
+  font-family: var(--wp-fd);
+  font-size: 5.5rem; font-weight: 900;
+  color: rgba(255,255,255,0.03);
+  line-height: 1; pointer-events: none; user-select: none;
+  transition: color 0.35s ease;
 }
-.wp-card:hover .wp-step-num,
-.wp-card.wp-card-active .wp-step-num {
-  color: rgba(0, 242, 255, 0.8);
-  transform: scale(1.12);
-}
+.wp-card.active .wp-bg-num { color: rgba(0,242,255,0.05); }
 
-/* Icon */
+/* Step badge */
+.wp-step-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 0.65rem; font-weight: 800;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: rgba(0,242,255,0.25);
+  margin-bottom: 1.3rem;
+  transition: color 0.3s;
+}
+.wp-step-badge-dot {
+  width: 4px; height: 4px; border-radius: 50%;
+  background: currentColor;
+}
+.wp-card.active .wp-step-badge { color: rgba(0,242,255,0.65); }
+
+/* Icon — only brightness shift, no color flip */
 .wp-icon-wrap {
   position: relative;
-  width: 56px; height: 56px;
-  border-radius: 14px;
-  background: rgba(0, 242, 255, 0.08);
-  border: 1px solid rgba(0, 242, 255, 0.15);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 1.5rem;
-  transition: background 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
-  flex-shrink: 0;
+  width: 52px; height: 52px; border-radius: 13px;
+  background: rgba(0,242,255,0.07);
+  border: 1px solid rgba(0,242,255,0.12);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1.3rem; flex-shrink: 0;
+  transition: border-color 0.35s ease, box-shadow 0.35s ease;
 }
-.wp-icon-ring {
-  position: absolute;
-  inset: -4px;
-  border-radius: 18px;
-  border: 1px solid rgba(0, 242, 255, 0.08);
-  transition: border-color 0.35s ease;
+.wp-icon-glow {
+  position: absolute; inset: -3px; border-radius: 16px;
+  pointer-events: none;
 }
 .wp-icon-wrap svg {
-  width: 26px; height: 26px;
+  width: 24px; height: 24px;
   color: var(--wp-cyan);
-  transition: color 0.3s ease, transform 0.3s ease;
+  transition: opacity 0.3s;
 }
-.wp-card:hover .wp-icon-wrap,
-.wp-card.wp-card-active .wp-icon-wrap {
-  background: var(--wp-cyan);
-  border-color: var(--wp-cyan);
-  box-shadow: 0 0 24px rgba(0, 242, 255, 0.5), inset 0 0 12px rgba(255, 255, 255, 0.1);
+/* On hover: icon just gets slightly brighter, nothing else */
+.wp-card.active .wp-icon-wrap {
+  border-color: rgba(0,242,255,0.3);
+  box-shadow: 0 0 14px rgba(0,242,255,0.15);
 }
-.wp-card:hover .wp-icon-ring,
-.wp-card.wp-card-active .wp-icon-ring {
-  border-color: rgba(0, 242, 255, 0.3);
-}
-.wp-card:hover .wp-icon-wrap svg,
-.wp-card.wp-card-active .wp-icon-wrap svg {
-  color: #000000;
-  transform: scale(1.1) rotate(-5deg);
-}
+.wp-card.active .wp-icon-wrap svg { opacity: 1; }
 
 /* Title */
 .wp-card-title {
-  font-family: var(--wp-font-display);
-  font-size: 1rem;
-  font-weight: 800;
-  color: var(--wp-text);
-  margin-bottom: 0.65rem;
-  letter-spacing: -0.01em;
-  line-height: 1.25;
-  transition: color 0.3s ease;
+  font-family: var(--wp-fd);
+  font-size: 0.975rem; font-weight: 800;
+  color: var(--wp-text); margin-bottom: 0.55rem;
+  letter-spacing: -0.01em; line-height: 1.25;
+  transition: color 0.3s;
 }
-.wp-card:hover .wp-card-title,
-.wp-card.wp-card-active .wp-card-title {
-  color: var(--wp-cyan);
-}
+/* Title color stays white on hover — no cyan jump */
+.wp-card.active .wp-card-title { color: rgba(255,255,255,0.95); }
 
 /* Description */
 .wp-card-desc {
-  font-size: 0.875rem;
-  font-weight: 300;
-  color: rgba(255, 255, 255, 0.52);
-  line-height: 1.65;
-  flex: 1;
-}
-
-/* Footer */
-.wp-card-footer {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  margin-top: 1.4rem;
-  padding-top: 1rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-}
-.wp-status-dot {
-  width: 5px; height: 5px;
-  border-radius: 50%;
-  background: rgba(0, 242, 255, 0.3);
-  transition: background 0.3s, box-shadow 0.3s;
-  animation: wp-pulse 2.5s ease-in-out infinite;
-}
-.wp-card:hover .wp-status-dot,
-.wp-card.wp-card-active .wp-status-dot {
-  background: var(--wp-cyan);
-  box-shadow: 0 0 6px var(--wp-cyan);
-}
-.wp-status-text {
-  font-size: 0.65rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.22);
+  font-size: 0.855rem; font-weight: 300;
+  color: rgba(255,255,255,0.48); line-height: 1.65;
   transition: color 0.3s;
 }
-.wp-card:hover .wp-status-text,
-.wp-card.wp-card-active .wp-status-text {
-  color: rgba(0, 242, 255, 0.6);
+.wp-card.active .wp-card-desc { color: rgba(255,255,255,0.6); }
+
+/* Expandable detail — slides in softly */
+.wp-card-detail {
+  max-height: 0; overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.4s cubic-bezier(0.16,1,0.3,1),
+              opacity 0.35s ease;
+}
+.wp-card.active .wp-card-detail { max-height: 100px; opacity: 1; }
+
+.wp-detail-divider {
+  height: 1px; margin: 0.85rem 0 0.7rem;
+  background: linear-gradient(90deg, rgba(0,242,255,0.2), transparent);
+}
+.wp-detail-text {
+  font-size: 0.775rem; font-weight: 300;
+  color: rgba(255,255,255,0.38); line-height: 1.6;
 }
 
-/* Hover shine sweep */
-.wp-card-shine {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    105deg,
-    transparent 30%,
-    rgba(255, 255, 255, 0.035) 50%,
-    transparent 70%
-  );
-  transform: translateX(-100%) skewX(-10deg);
-  transition: transform 0s;
-  pointer-events: none;
+/* Per-card progress bar */
+.wp-card-progress {
+  height: 2px; margin-top: 1.2rem;
+  background: rgba(255,255,255,0.05);
+  border-radius: 1px; overflow: hidden;
 }
-.wp-card:hover .wp-card-shine {
-  transform: translateX(200%) skewX(-10deg);
-  transition: transform 0.65s ease;
+.wp-card-progress-fill {
+  height: 100%; width: 0%;
+  background: linear-gradient(90deg, var(--wp-blue), var(--wp-cyan));
+  border-radius: 1px;
+  transition: width 1.4s cubic-bezier(0.16,1,0.3,1);
 }
 
-/* ──────────────────────────────────────────────────────────────
-   PROGRESS TRACK
-────────────────────────────────────────────────────────────── */
+/* ─────────────────────────────────────────────
+   GLOBAL PROGRESS TRACK
+───────────────────────────────────────────── */
 .wp-progress-track {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-top: 4rem;
-  padding: 1.2rem 1.8rem;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(0, 242, 255, 0.1);
-  border-radius: 12px;
-  backdrop-filter: blur(10px);
+  display: flex; align-items: center; gap: 1rem;
+  margin-top: 3.5rem;
+  padding: 1.1rem 1.6rem;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(0,242,255,0.1);
+  border-radius: 12px; backdrop-filter: blur(10px);
 }
 .wp-progress-label {
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.3);
-  white-space: nowrap;
-  min-width: 130px;
+  font-size: 0.68rem; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: rgba(255,255,255,0.28); white-space: nowrap; min-width: 130px;
 }
 .wp-progress-bar-wrap {
-  flex: 1;
-  height: 3px;
-  background: rgba(255, 255, 255, 0.06);
-  border-radius: 2px;
-  overflow: hidden;
+  flex: 1; height: 3px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 2px; overflow: visible;
+  position: relative;
 }
 .wp-progress-fill {
-  height: 100%;
-  width: 0%;
+  height: 100%; width: 0%;
   background: linear-gradient(90deg, var(--wp-blue), var(--wp-cyan), var(--wp-purple));
   border-radius: 2px;
-  transition: width 2.4s cubic-bezier(0.16, 1, 0.3, 1) 0.5s;
+  transition: width 2.6s cubic-bezier(0.16,1,0.3,1) 0.4s;
   box-shadow: 0 0 8px var(--wp-cyan);
 }
-.wp-progress-animate {
-  width: 100%;
+.wp-progress-fill.animate { width: 100%; }
+
+.wp-progress-glow {
+  position: absolute; top: 50%; width: 8px; height: 8px;
+  border-radius: 50%; margin-top: -4px;
+  background: var(--wp-cyan);
+  box-shadow: 0 0 12px var(--wp-cyan), 0 0 24px var(--wp-cyan);
+  left: 0; transform: translateX(-50%);
+  opacity: 0;
+  transition: left 2.6s cubic-bezier(0.16,1,0.3,1) 0.4s,
+              opacity 0.4s ease 0.4s;
 }
+.wp-progress-glow.animate { left: 100%; opacity: 1; }
+
 .wp-progress-pct {
-  font-family: var(--wp-font-display);
-  font-size: 0.78rem;
-  font-weight: 900;
+  font-family: var(--wp-fd); font-size: 0.78rem; font-weight: 900;
   background: linear-gradient(90deg, var(--wp-cyan), var(--wp-blue));
-  -webkit-background-clip: text;
-  background-clip: text;
+  -webkit-background-clip: text; background-clip: text;
   -webkit-text-fill-color: transparent;
-  min-width: 36px;
-  text-align: right;
+  min-width: 36px; text-align: right;
 }
 
-/* ──────────────────────────────────────────────────────────────
-   RESPONSIVE ADJUSTMENTS
-────────────────────────────────────────────────────────────── */
-@media (max-width: 1023px) {
-  .wp-connector { display: none; }
-}
-
+/* ─────────────────────────────────────────────
+   RESPONSIVE
+───────────────────────────────────────────── */
+@media (max-width: 1023px) { .wp-connector { display: none; } }
 @media (max-width: 639px) {
   .wp-heading { font-size: 1.75rem; }
   .wp-subheading { font-size: 0.95rem; }
-  .wp-progress-track { flex-wrap: wrap; gap: 0.75rem; }
+  .wp-progress-track { flex-wrap: wrap; }
   .wp-progress-label { min-width: unset; }
 }

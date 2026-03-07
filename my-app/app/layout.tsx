@@ -1,11 +1,18 @@
 import type { Metadata } from "next";
-import { Inter, Geist, Geist_Mono } from "next/font/google";
+import { Inter, Geist, Geist_Mono, Roboto } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/src/Navbar";
 
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
+});
+
+const roboto = Roboto({
+  variable: "--font-roboto",
+  subsets: ["latin"],
+  weight: ["100", "300", "400", "500", "700", "900"],
+  display: "swap",
 });
 
 const geistSans = Geist({
@@ -31,7 +38,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${roboto.variable} ${inter.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Navbar />
         {children}
