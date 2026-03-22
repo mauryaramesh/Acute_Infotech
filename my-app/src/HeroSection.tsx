@@ -1,281 +1,250 @@
 "use client";
-import React, { useEffect, useRef, useState, useCallback } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./HeroSection.css";
-import logo from './assets/images/acute_right_1.png';
 
-const heroImages = [
-  logo.src,
-  "/right_2.webp",
-  "/right_3.webp",
+// ── Full-bleed background images (replace with your actual images) ──
+// These are the 3 cinematic IT/AI background scenes that slide
+const bgSlides = [
+  {
+    // Scene 1 — Digital dashboard / tech office
+    src: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1800&q=85",
+    label: "Digital Engineering",
+  },
+  {
+    // Scene 2 — AI / robotics / team
+    src: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=1800&q=85",
+    label: "AI Automation",
+  },
+  {
+    // Scene 3 — Cloud / data infrastructure
+    src: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1800&q=85",
+    label: "Cloud Systems",
+  },
 ];
 
-// ── Particle System ──────────────────────────────────────────────
-function useParticles(canvasRef: React.RefObject<HTMLCanvasElement>) {
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
+// ── Award badges exactly as seen in the video ──
+const awards = [
+  {
+    logo: (
+      <svg width="28" height="28" viewBox="0 0 40 40" fill="none">
+        <circle cx="20" cy="20" r="18" stroke="#C8A96E" strokeWidth="1.5"/>
+        <path d="M20 8l2.5 7.5H30l-6 4.5 2.5 7.5L20 23l-6.5 4.5 2.5-7.5-6-4.5h7.5z" fill="#C8A96E"/>
+      </svg>
+    ),
+    title: "Entrepreneur",
+    subtitle: "APP DEVELOPMENT\nCOMPANY OF THE YEAR",
+    accent: "#C8A96E",
+  },
+  {
+    logo: (
+      <svg width="28" height="20" viewBox="0 0 56 32" fill="none">
+        <rect x="1" y="1" width="54" height="30" rx="3" stroke="#E8B84B" strokeWidth="1.5"/>
+        <text x="28" y="22" textAnchor="middle" fill="#E8B84B" fontSize="14" fontWeight="800" fontFamily="serif">ET</text>
+      </svg>
+    ),
+    title: "ET Awards",
+    subtitle: "INDUSTRY\nCHANGE MAKERS",
+    accent: "#E8B84B",
+  },
+  {
+    logo: (
+      <svg width="48" height="24" viewBox="0 0 96 40" fill="none">
+        <text x="0" y="28" fill="white" fontSize="13" fontWeight="900" fontFamily="sans-serif" letterSpacing="-0.5">TIMES</text>
+        <text x="0" y="38" fill="#E8B84B" fontSize="7" fontWeight="600" fontFamily="sans-serif" letterSpacing="1">BUSINESS AWARDS</text>
+      </svg>
+    ),
+    title: "Times Business",
+    subtitle: "TECH COMPANY\nOF THE YEAR",
+    accent: "#E8B84B",
+  },
+  {
+    logo: (
+      <svg width="52" height="20" viewBox="0 0 80 28" fill="none">
+        <text x="0" y="20" fill="white" fontSize="15" fontWeight="900" fontFamily="serif" letterSpacing="-0.5">Deloitte.</text>
+        <text x="0" y="28" fill="#86BC25" fontSize="7" fontWeight="700" fontFamily="sans-serif">Technology Fast 50</text>
+      </svg>
+    ),
+    title: "Deloitte",
+    subtitle: "TECHNOLOGY\nFAST 50",
+    accent: "#86BC25",
+  },
+];
 
-    let animId: number;
-    const mouse = { x: -9999, y: -9999 };
-
-    const resize = () => {
-      canvas.width = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
-    };
-    resize();
-    window.addEventListener("resize", resize);
-
-    const onMouseMove = (e: MouseEvent) => {
-      const rect = canvas.getBoundingClientRect();
-      mouse.x = e.clientX - rect.left;
-      mouse.y = e.clientY - rect.top;
-    };
-    canvas.addEventListener("mousemove", onMouseMove);
-
-    const PARTICLE_COUNT = 80;
-    const particles = Array.from({ length: PARTICLE_COUNT }, () => ({
-      x: Math.random() * (canvas.width || 1200),
-      y: Math.random() * (canvas.height || 800),
-      vx: (Math.random() - 0.5) * 0.4,
-      vy: (Math.random() - 0.5) * 0.4,
-      r: Math.random() * 1.8 + 0.4,
-      alpha: Math.random() * 0.6 + 0.1,
-      hue: Math.random() > 0.7 ? 280 : 195,
-    }));
-
-    const draw = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      particles.forEach((p) => {
-        const dx = p.x - mouse.x;
-        const dy = p.y - mouse.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 120) {
-          p.vx += (dx / dist) * 0.08;
-          p.vy += (dy / dist) * 0.08;
-        }
-        p.vx *= 0.99;
-        p.vy *= 0.99;
-        p.x += p.vx;
-        p.y += p.vy;
-        if (p.x < 0) p.x = canvas.width;
-        if (p.x > canvas.width) p.x = 0;
-        if (p.y < 0) p.y = canvas.height;
-        if (p.y > canvas.height) p.y = 0;
-
-        const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 3);
-        gradient.addColorStop(0, `hsla(${p.hue}, 100%, 65%, ${p.alpha})`);
-        gradient.addColorStop(1, `hsla(${p.hue}, 100%, 65%, 0)`);
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r * 3, 0, Math.PI * 2);
-        ctx.fillStyle = gradient;
-        ctx.fill();
-      });
-
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 110) {
-            ctx.beginPath();
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(0, 242, 255, ${0.08 * (1 - dist / 110)})`;
-            ctx.lineWidth = 0.6;
-            ctx.stroke();
-          }
-        }
-      }
-      animId = requestAnimationFrame(draw);
-    };
-    draw();
-
-    return () => {
-      cancelAnimationFrame(animId);
-      window.removeEventListener("resize", resize);
-      canvas.removeEventListener("mousemove", onMouseMove);
-    };
-  }, [canvasRef]);
-}
-
-// ── Typewriter Hook ────────────────────────────────────────────
-function useTypewriter(words: string[], speed = 80, pause = 2200) {
-  const [text, setText] = useState("");
-  const [wordIndex, setWordIndex] = useState(0);
-  const [isDeleting, setIsDeleting] = useState(false);
+// ── Typewriter for subheadline ──
+function useTypewriter(words: string[], speed = 70, pause = 2400) {
+  const [text, setText]           = useState("");
+  const [wordIdx, setWordIdx]     = useState(0);
+  const [deleting, setDeleting]   = useState(false);
 
   useEffect(() => {
-    const current = words[wordIndex % words.length];
-    const timeout = setTimeout(() => {
-      if (!isDeleting) {
-        setText(current.slice(0, text.length + 1));
-        if (text.length + 1 === current.length) {
-          setTimeout(() => setIsDeleting(true), pause);
-        }
+    const cur = words[wordIdx % words.length];
+    const t = setTimeout(() => {
+      if (!deleting) {
+        setText(cur.slice(0, text.length + 1));
+        if (text.length + 1 === cur.length) setTimeout(() => setDeleting(true), pause);
       } else {
-        setText(current.slice(0, text.length - 1));
-        if (text.length - 1 === 0) {
-          setIsDeleting(false);
-          setWordIndex((w) => w + 1);
-        }
+        setText(cur.slice(0, text.length - 1));
+        if (text.length - 1 === 0) { setDeleting(false); setWordIdx(w => w + 1); }
       }
-    }, isDeleting ? speed / 2 : speed);
-    return () => clearTimeout(timeout);
-  }, [text, isDeleting, wordIndex, words, speed, pause]);
+    }, deleting ? speed / 2 : speed);
+    return () => clearTimeout(t);
+  }, [text, deleting, wordIdx, words, speed, pause]);
 
   return text;
 }
 
-// ── Magnetic Button ────────────────────────────────────────────
-function MagneticBtn({ href, children }: { href: string; children: React.ReactNode }) {
-  const ref = useRef<HTMLAnchorElement>(null);
+export default function HeroSection() {
+  const [active, setActive]         = useState(0);
+  const [prev,   setPrev]           = useState<number | null>(null);
+  const [loaded, setLoaded]         = useState(false);
+  const intervalRef                 = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  const onMouseMove = useCallback((e: React.MouseEvent) => {
-    const el = ref.current;
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    const cx = rect.left + rect.width / 2;
-    const cy = rect.top + rect.height / 2;
-    const dx = (e.clientX - cx) * 0.35;
-    const dy = (e.clientY - cy) * 0.35;
-    el.style.transform = `translate(${dx}px, ${dy}px)`;
-  }, []);
-
-  const onMouseLeave = useCallback(() => {
-    if (ref.current) ref.current.style.transform = "translate(0,0)";
-  }, []);
-
-  return (
-    <a
-      ref={ref}
-      href={href}
-      className="hero-btn"
-      onMouseMove={onMouseMove}
-      onMouseLeave={onMouseLeave}
-    >
-      {children}
-    </a>
-  );
-}
-
-// ── Main Component ─────────────────────────────────────────────
-const HeroSection: React.FC = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  useParticles(canvasRef);
-
-  const dynamicWord = useTypewriter([
-    "digital products",
-    "SaaS platforms",
-    "AI automations",
-    "web experiences",
-    "mobile apps",
-    "LLM integrations",
-    "cloud solutions",
-    "AR/VR experiences",
-    "blockchain apps",
-    "IoT systems",
+  const word = useTypewriter([
+    "Web Applications",
+    "Mobile Apps",
+    "AI Solutions",
+    "Cloud Platforms",
+    "SaaS Products",
+    "Digital Systems",
   ]);
 
-  const [activeImage, setActiveImage] = useState(0);
-
+  // Preload first image then show hero
   useEffect(() => {
-    const t = setInterval(() => setActiveImage(i => (i + 1) % heroImages.length), 3500);
-    return () => clearInterval(t);
+    const img = new Image();
+    img.src = bgSlides[0].src;
+    img.onload = () => setLoaded(true);
+    setTimeout(() => setLoaded(true), 800); // fallback
   }, []);
 
+  // Auto-advance slides
+  const advance = (to: number) => {
+    setPrev(active);
+    setActive(to);
+    setTimeout(() => setPrev(null), 900);
+  };
+
+  useEffect(() => {
+    intervalRef.current = setInterval(() => {
+      setActive(i => {
+        const next = (i + 1) % bgSlides.length;
+        setPrev(i);
+        setTimeout(() => setPrev(null), 900);
+        return next;
+      });
+    }, 5000);
+    return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
+  }, []);
+
+  const handleDot = (i: number) => {
+    if (i === active) return;
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    advance(i);
+    intervalRef.current = setInterval(() => {
+      setActive(j => {
+        const next = (j + 1) % bgSlides.length;
+        setPrev(j);
+        setTimeout(() => setPrev(null), 900);
+        return next;
+      });
+    }, 5000);
+  };
+
   return (
-    <section className="hero-section">
-      {/* Particle Canvas */}
-      <canvas ref={canvasRef} className="hero-particles" />
+    <section className={`hs-section ${loaded ? "hs-loaded" : ""}`}>
 
-      {/* Background Layers */}
-      <div className="hero-grid-overlay" />
-      <div className="hero-scanlines" />
-      <div className="hero-glow-blob blob-1" />
-      <div className="hero-glow-blob blob-2" />
-      <div className="hero-glow-blob blob-3" />
-      <div className="hero-glow-blob blob-4" />
-      <div className="hero-noise" />
+      {/* ── Full-bleed background slides ── */}
+      <div className="hs-bg-stage">
+        {bgSlides.map((s, i) => (
+          <div
+            key={i}
+            className={`hs-bg-slide ${i === active ? "hs-bg-active" : ""} ${i === prev ? "hs-bg-exit" : ""}`}
+          >
+            <img src={s.src} alt={s.label} className="hs-bg-img" />
+          </div>
+        ))}
+      </div>
 
-      <div className="hero-container">
+      {/* ── Overlays ── */}
+      {/* Left-side dark gradient so text is readable */}
+      <div className="hs-overlay-left" />
+      {/* Full subtle dark overlay */}
+      <div className="hs-overlay-full" />
+      {/* Bottom fade */}
+      <div className="hs-overlay-bottom" />
 
-        {/* ── LEFT SIDE ── */}
-        <div className="hero-left">
-          <h1 className="hero-title">
-            <span className="hero-title-static">We turn your ideas into</span>
-            <span className="hero-title-dynamic">
-              <span className="hero-title-typewriter">{dynamicWord}</span>
-            </span>
+      {/* ── Main content ── */}
+      <div className="hs-body">
+
+        {/* ── LEFT — hero copy ── */}
+        <div className="hs-left">
+
+         
+
+          {/* Main headline */}
+          <h1 className="hs-headline">
+            Driving Innovation With
+            <br className="hs-br" />
+            Industry‑Experienced
+            <br />
+            <span className="hs-headline-accent">Software Experts</span>
           </h1>
 
-          <p className="hero-description">
-            We build custom <strong>SOFTWARE</strong> and <strong>APPS</strong> for our customers
-            to run their business efficiently with cutting&#8209;edge{" "}
-            <span className="hero-desc-highlight">AI automation</span>.
+          {/* Description */}
+          <p className="hs-desc">
+            Offering highly scalable, functionality‑rich, and reliable software
+            development solutions and custom website &amp; app design and development
+            services that drive digital transformation in the competitive landscape.
           </p>
 
-          <div className="hero-cta-row">
-            <MagneticBtn href="/contact">
-              <span>Get A Quote</span>
-              <span className="hero-btn-icon">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                  <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </span>
-            </MagneticBtn>
+          {/* Typewriter capability — chip style */}
+          <div className="hs-capability">
+            <span className="hs-cap-prefix">We build</span>
+            <span className="hs-cap-chip">
+              <span className="hs-cap-chip-icon">⚡</span>
+              <span className="hs-cap-typed">{word}</span>
+            </span>
+            <span className="hs-cap-suffix">for the world</span>
           </div>
-        </div>
 
-        {/* ── RIGHT SIDE ── */}
-        <div className="hero-right">
-          <div className="hero-orbit hero-orbit-1" />
-          <div className="hero-orbit hero-orbit-2" />
-          <div className="hero-orbit hero-orbit-3" />
+         
+          {/* CTA buttons */}
+          <div className="hs-cta-row">
+            <a href="/contact" className="hs-cta-btn">
+              Get A Free Consultation
+              <svg width="16" height="16" fill="none" viewBox="0 0 16 16">
+                <path d="M3 8H13M13 8L9 4M13 8L9 12"
+                  stroke="white" strokeWidth="1.8"
+                  strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </a>
+        
+          </div>
 
-          <div className="hero-image-wrapper">
-            <div className="hero-corner hero-corner-tl" />
-            <div className="hero-corner hero-corner-tr" />
-            <div className="hero-corner hero-corner-bl" />
-            <div className="hero-corner hero-corner-br" />
-            <div className="hero-progress-bar" />
-
-            <div className="hero-carousel">
-              {heroImages.map((src, i) => (
-                <img
-                  key={i}
-                  src={src}
-                  alt={`Project ${i + 1}`}
-                  className={`hero-carousel-img ${i === activeImage ? "active" : ""}`}
-                />
-              ))}
-              <div className="hero-dots">
-                {heroImages.map((_, i) => (
-                  <button
-                    key={i}
-                    className={`hero-dot ${i === activeImage ? "active" : ""}`}
-                    onClick={() => setActiveImage(i)}
-                  />
-                ))}
-              </div>
-              <div className="hero-card-shimmer" />
-            </div>
+          {/* Slide dots */}
+          <div className="hs-dots">
+            {bgSlides.map((_, i) => (
+              <button
+                key={i}
+                className={`hs-dot ${i === active ? "hs-dot-active" : ""}`}
+                onClick={() => handleDot(i)}
+                aria-label={`Slide ${i + 1}`}
+              />
+            ))}
           </div>
         </div>
 
       </div>
 
-      {/* Scroll Indicator */}
-      <div className="hero-scroll-indicator">
-        <div className="hero-scroll-mouse">
-          <div className="hero-scroll-wheel" />
-        </div>
-        <span>Scroll to explore</span>
+      {/* ── Award badges row — bottom right ── */}
+     
+
+      {/* ── Slide progress bar ── */}
+      <div className="hs-progress-rail">
+        <div className="hs-progress-fill" key={active} />
       </div>
+
+      
+
     </section>
   );
-};
-
-export default HeroSection;
+}
