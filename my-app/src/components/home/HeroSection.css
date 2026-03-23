@@ -76,15 +76,14 @@
 ═══════════════════════════════════════════════════════════════ */
 .hero__ov { position: absolute; inset: 0; pointer-events: none; z-index: 2; }
 
-/* Main left-side gradient — SaigonTech-style dark left column */
+/* Centered vignette overlay */
 .hero__ov--left {
-  background: linear-gradient(
-    100deg,
-    rgba(5,9,20,.96)  0%,
-    rgba(5,9,20,.88)  28%,
-    rgba(5,9,20,.65)  50%,
-    rgba(5,9,20,.25)  70%,
-    transparent       85%
+  background: radial-gradient(
+    circle at center,
+    rgba(5,9,20,.85)  0%,
+    rgba(5,9,20,.65)  40%,
+    rgba(5,9,20,.35)  70%,
+    transparent       100%
   );
 }
 /* Full subtle tint */
@@ -129,16 +128,19 @@
   margin: 0 auto;
   padding: 140px 0 110px;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
+  justify-content: center;
 }
 
 /* ═══════════════════════════════════════════════════════════════
    COPY COLUMN — entry animation
 ═══════════════════════════════════════════════════════════════ */
 .hero__copy {
-  max-width: 680px;
+  max-width: 800px;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
   gap: 0;
 }
 /* All direct children start invisible */
@@ -195,6 +197,7 @@
   font-weight: 900;
   line-height: 1.0;
   letter-spacing: -.04em;
+  text-align: center;
   color: var(--hero-white);
   margin-bottom: 1.4rem;
   /* Crisp text over photo */
@@ -224,13 +227,14 @@
 .hero__desc {
   font-size: 1.05rem; font-weight: 400; line-height: 1.78;
   color: rgba(248,250,255,.62);
-  max-width: 530px; margin-bottom: 1.6rem;
+  max-width: 700px; margin-bottom: 1.6rem;
   text-shadow: 0 1px 8px rgba(0,0,0,.5);
+  text-align: center;
 }
 
 /* ─── Service typewriter chip ─────────────────────────────────── */
 .hero__service-row {
-  display: flex; align-items: center; gap: 12px;
+  display: flex; align-items: center; justify-content: center; gap: 12px;
   margin-bottom: 1.8rem;
   flex-wrap: wrap;
 }
@@ -317,7 +321,7 @@
 
 /* ─── CTA Buttons ─────────────────────────────────────────────── */
 .hero__ctas {
-  display: flex; align-items: center; gap: 1rem;
+  display: flex; align-items: center; justify-content: center; gap: 1rem;
   flex-wrap: wrap; margin-bottom: 2rem;
 }
 .hero__btn {
@@ -505,7 +509,7 @@
   .hero__desc   { font-size: .92rem; }
   .hero__stats  { width: 100%; }
   .hero__stat   { flex: 1; padding: .8rem .7rem; }
-  .hero__ctas   { flex-direction: column; align-items: flex-start; }
+  .hero__ctas   { flex-direction: column; align-items: center; }
   .hero__awards { display: none; }
   .hero__scroll { display: none; }
 }

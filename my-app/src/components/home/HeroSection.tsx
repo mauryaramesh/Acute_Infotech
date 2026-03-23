@@ -263,9 +263,9 @@ export default function HeroSection() {
 
           {/* Description */}
           <p className="hero__desc">
-            Offering highly scalable, functionality‑rich, and reliable software
-            development solutions and custom website &amp; app design and development
-            services that drive digital transformation in the competitive landscape.
+            Offering highly scalable, functionality‑rich, and reliable software development solutions.<br />
+            Custom website &amp; app design and development services.<br />
+            Driving digital transformation in the competitive landscape.
           </p>
 
           {/* Animated service typewriter */}
