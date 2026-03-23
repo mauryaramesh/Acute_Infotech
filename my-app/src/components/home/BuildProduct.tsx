@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import "./Buildproduct .css";
+import "./BuildProduct.css";
 // ── Animated Counter ──────────────────────────────────────────
 function CountUp({ end, suffix = "", prefix = "" }: { end: number; suffix?: string; prefix?: string }) {
   const [count, setCount] = useState(0);

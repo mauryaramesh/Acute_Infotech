@@ -1,11 +1,11 @@
-import HeroSection from "@/src/HeroSection";
-import AISolutions from "@/src/AISolutions";
-import WorkingProcess from "@/src/WorkingProcess";
-import BuildProduct from "@/src/BuildProduct";
-import ClientFeedback from "@/src/ClientFeedback";
-import TechStackMarquee from "@/src/TechStackMarquee";
-import IndustriesSection from "@/src/Industriessection";
-import StartProject from "@/src/Startproject";
+import HeroSection from "@/src/components/home/HeroSection";
+import AISolutions from "@/src/components/home/AISolutions";
+import WorkingProcess from "@/src/components/home/WorkingProcess";
+import BuildProduct from "@/src/components/home/BuildProduct";
+import ClientFeedback from "@/src/components/home/ClientFeedback";
+import TechStackMarquee from "@/src/components/shared/TechStackMarquee";
+import IndustriesSection from "@/src/components/home/IndustriesSection";
+import StartProject from "@/src/components/shared/StartProject";
 
 export default function Home() {
   return (

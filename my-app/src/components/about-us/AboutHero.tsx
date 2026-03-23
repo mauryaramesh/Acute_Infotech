@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import "./Abouthero.css";
+import "./AboutHero.css";
 
 const stats = [
   { val: "8+",   label: "Years of Experience" },

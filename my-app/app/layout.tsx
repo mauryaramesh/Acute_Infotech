@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/src/Navbar";
+import Navbar from "@/src/components/shared/Navbar";
 
 const inter = Inter({
   variable: "--font-inter",

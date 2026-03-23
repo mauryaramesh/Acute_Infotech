@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState, useCallback } from "react";
 /* ─────────────────────────────────────────────────────────────
    PARTICLE HOOK
 ───────────────────────────────────────────────────────────── */
-function useParticles(canvasRef: React.RefObject<HTMLCanvasElement>) {
+function useParticles(canvasRef: React.RefObject<HTMLCanvasElement | null>) {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;

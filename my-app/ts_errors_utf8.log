@@ -1,0 +1,6 @@
+app/services/page.tsx(325,16): error TS2345: Argument of type 'RefObject<HTMLCanvasElement | null>' is not assignable to parameter of type 'RefObject<HTMLCanvasElement>'.
+  Type 'HTMLCanvasElement | null' is not assignable to type 'HTMLCanvasElement'.
+    Type 'null' is not assignable to type 'HTMLCanvasElement'.
+src/components/home/HeroSection.tsx(150,18): error TS2345: Argument of type 'RefObject<HTMLCanvasElement | null>' is not assignable to parameter of type 'RefObject<HTMLCanvasElement>'.
+  Type 'HTMLCanvasElement | null' is not assignable to type 'HTMLCanvasElement'.
+    Type 'null' is not assignable to type 'HTMLCanvasElement'.

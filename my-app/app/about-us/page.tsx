@@ -1,11 +1,11 @@
 import React from 'react';
-import AboutHero from './Abouthero';
-import OurStory from './Ourstory';
-import HowWeWork from './Howwework';
-import MeetTheTeam from './Meettheteam';
-import WhyChooseUs from './Whychooseus';
-import TechStackMarquee from '@/src/TechStackMarquee';
-import StartProject from '@/src/Startproject';
+import AboutHero from '@/src/components/about-us/AboutHero';
+import OurStory from '@/src/components/about-us/OurStory';
+import HowWeWork from '@/src/components/about-us/HowWeWork';
+import MeetTheTeam from '@/src/components/about-us/MeetTheTeam';
+import WhyChooseUs from '@/src/components/about-us/WhyChooseUs';
+import TechStackMarquee from '@/src/components/shared/TechStackMarquee';
+import StartProject from '@/src/components/shared/StartProject';
 
 export default function AboutUsPage() {
     return (

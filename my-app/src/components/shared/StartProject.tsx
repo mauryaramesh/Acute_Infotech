@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState, useCallback } from "react";
-import "./Startproject.css";
+import "./StartProject.css";
 
 const projectTypes = [
   { id: "web",     label: "Web App",         icon: "🌐", desc: "SaaS, dashboards, portals" },

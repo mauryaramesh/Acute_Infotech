@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import "./Ourstory.css";
+import "./OurStory.css";
 
 const contactOptions = [
   {

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import "./Techstackmarquee.css";
+import "./TechStackMarquee.css";
 
 const technologies = [
   // Cloud & Infrastructure

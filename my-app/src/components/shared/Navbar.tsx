@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import './Navbar.css';
-import logo from './assets/images/Acute_InfoSoft_logo.png';
+import logo from '@/src/assets/images/Acute_InfoSoft_logo.png';
 
 const servicesData: Record<string, string[]> = {
   "SOFTWARE DEVELOPMENT": [
