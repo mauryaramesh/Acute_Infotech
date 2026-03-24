@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/src/components/shared/Navbar";
+import CursorEffect from "@/src/components/ui/CursorEffect";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -42,6 +43,7 @@ export default function RootLayout({
         className={`${inter.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Navbar />
+        <CursorEffect />
         {children}
       </body>
     </html>

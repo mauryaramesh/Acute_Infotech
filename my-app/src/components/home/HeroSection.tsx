@@ -225,28 +225,13 @@ export default function HeroSection() {
       <div className="hero__ov hero__ov--vignette" />
       <div className="hero__ov hero__ov--bottom" />
 
-      {/* ── Animated grain texture ── */}
       <div className="hero__grain" />
 
-      {/* ── Horizontal rule at bottom of copy area ── */}
       <div className="hero__rule" />
 
-      {/* ══════════════════════════════════════════
-          MAIN COPY
-      ══════════════════════════════════════════ */}
       <div className="hero__body">
         <div className={`hero__copy ${headIn ? "hero__copy--in" : ""}`}>
 
-          {/* Eyebrow */}
-          <div className="hero__eyebrow">
-            <span className="hero__eyebrow-dot" />
-            <span>Trusted by 50+ Businesses Globally</span>
-            <span className="hero__eyebrow-badge">
-              ★ Top Rated
-            </span>
-          </div>
-
-          {/* Headline — each word animates in separately */}
           <h1 className="hero__h1" aria-label="Driving Innovation With Industry-Experienced Software Experts">
             {"Driving Innovation With".split(" ").map((w, i) => (
               <span key={i} className="hero__word" style={{ animationDelay: `${0.05 * i + 0.1}s` }}>{w}&nbsp;</span>

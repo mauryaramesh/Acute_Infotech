@@ -1,237 +1,267 @@
 "use client";
-
 import React, { useEffect, useRef, useState } from "react";
 import "./WorkingProcess.css";
 
-const steps = [
+const STEPS = [
   {
     id: 1,
+    num: "01",
     title: "Requirement Gathering",
-    description: "Strategic insights shaping clear project direction.",
-    detail: "Deep-dive discovery sessions, stakeholder interviews, and competitive analysis to define the project scope.",
+    short: "Strategic insights shaping clear project direction.",
+    detail: "Deep-dive discovery sessions, stakeholder interviews, and competitive analysis to define the project scope, goals, and KPIs.",
     icon: (
-      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.4}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
       </svg>
     ),
   },
   {
     id: 2,
+    num: "02",
     title: "Analysis & Planning",
-    description: "Structured planning for efficient, scalable outcomes.",
-    detail: "Architecture decisions, tech stack selection, sprint planning, and risk assessment to set a clear roadmap.",
+    short: "Structured planning for efficient, scalable outcomes.",
+    detail: "Architecture decisions, tech stack selection, sprint planning, and risk assessment to set a clear, measurable roadmap.",
     icon: (
-      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-        <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.4}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
       </svg>
     ),
   },
   {
     id: 3,
-    title: "Design",
-    description: "User-centric designs crafted for lasting impact.",
-    detail: "Wireframes, high-fidelity UI mockups, design systems, and interactive prototypes reviewed with stakeholders.",
+    num: "03",
+    title: "UI/UX Design",
+    short: "User-centric designs crafted for lasting impact.",
+    detail: "Wireframes, high-fidelity UI mockups, design systems, and interactive prototypes reviewed and approved with stakeholders.",
     icon: (
-      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.4}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
       </svg>
     ),
   },
   {
     id: 4,
+    num: "04",
     title: "Development",
-    description: "Robust engineering powering reliable digital solutions.",
-    detail: "Agile sprints, clean code practices, CI/CD pipelines, and regular demos keeping you in the loop.",
+    short: "Robust engineering powering reliable digital solutions.",
+    detail: "Agile 2-week sprints, clean code practices, CI/CD pipelines, and live staging demos keeping you in the loop every step.",
     icon: (
-      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.4}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
       </svg>
     ),
   },
   {
     id: 5,
+    num: "05",
     title: "Testing & QA",
-    description: "Precision testing ensuring uncompromised performance.",
-    detail: "Automated test suites, manual QA, performance benchmarking, and security audits before release.",
+    short: "Precision testing ensuring uncompromised performance.",
+    detail: "Automated test suites, manual QA, load benchmarking, and security audits — nothing ships without full sign-off.",
     icon: (
-      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.4}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
       </svg>
     ),
   },
   {
     id: 6,
+    num: "06",
     title: "Deployment",
-    description: "Seamless deployment enabling smooth go-live operations.",
-    detail: "Zero-downtime deployments, cloud infrastructure setup, monitoring dashboards, and rollback strategies.",
+    short: "Seamless deployment enabling smooth go-live operations.",
+    detail: "Zero-downtime releases, cloud infrastructure setup, live monitoring dashboards, and instant rollback strategies.",
     icon: (
-      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.4}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
       </svg>
     ),
   },
   {
     id: 7,
+    num: "07",
     title: "Maintenance & Support",
-    description: "Proactive support sustaining long-term product excellence.",
-    detail: "24/7 monitoring, bug fixes, performance optimizations, and feature iterations based on user feedback.",
+    short: "Proactive support sustaining long-term product excellence.",
+    detail: "24/7 monitoring, rapid bug fixes, performance optimizations, and feature iterations based on real user feedback.",
     icon: (
-      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.4}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" />
       </svg>
     ),
   },
   {
     id: 8,
-    title: "Success",
-    description: "Celebrating shared victory and continuous growth.",
-    detail: "Analytics reviews, growth planning, and celebrating milestones — your success is our success.",
+    num: "08",
+    title: "Growth & Success",
+    short: "Celebrating shared victory and continuous growth.",
+    detail: "Analytics reviews, A/B testing, growth roadmapping, and ongoing partnership — your long-term success is our mission.",
     icon: (
-      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-7.714 2.143L11 21l-2.286-6.857L1 12l7.714-2.143L11 3z" />
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.4}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
       </svg>
     ),
   },
 ];
 
-const WorkingProcess: React.FC = () => {
+// ─── animated canvas background ─────────────────────────────────
+function WpCanvas() {
+  const ref = useRef<HTMLCanvasElement>(null);
+  useEffect(() => {
+    const c = ref.current; if (!c) return;
+    const ctx = c.getContext("2d"); if (!ctx) return;
+    let raf: number;
+    const resize = () => { c.width = c.offsetWidth; c.height = c.offsetHeight; };
+    resize();
+    const ro = new ResizeObserver(resize); ro.observe(c);
+    const pts = Array.from({ length: 40 }, () => ({
+      x: Math.random(), y: Math.random(),
+      vx: (Math.random() - .5) * .00015,
+      vy: (Math.random() - .5) * .00015,
+      r: Math.random() * 1.2 + .4,
+    }));
+    const tick = () => {
+      const { width: w, height: h } = c;
+      ctx.clearRect(0, 0, w, h);
+      pts.forEach(p => {
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 0) p.x = 1; if (p.x > 1) p.x = 0;
+        if (p.y < 0) p.y = 1; if (p.y > 1) p.y = 0;
+      });
+      for (let i = 0; i < pts.length; i++) for (let j = i + 1; j < pts.length; j++) {
+        const dx = (pts[i].x - pts[j].x) * w, dy = (pts[i].y - pts[j].y) * h;
+        const d = Math.hypot(dx, dy);
+        if (d < 160) {
+          ctx.beginPath();
+          ctx.moveTo(pts[i].x * w, pts[i].y * h);
+          ctx.lineTo(pts[j].x * w, pts[j].y * h);
+          ctx.strokeStyle = `rgba(0,102,255,${.09 * (1 - d / 160)})`;
+          ctx.lineWidth = .6; ctx.stroke();
+        }
+      }
+      pts.forEach(p => {
+        ctx.beginPath(); ctx.arc(p.x * w, p.y * h, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = "rgba(80,140,255,.18)"; ctx.fill();
+      });
+      raf = requestAnimationFrame(tick);
+    };
+    tick();
+    return () => { cancelAnimationFrame(raf); ro.disconnect(); };
+  }, []);
+  return <canvas ref={ref} className="wp-canvas" />;
+}
+
+export default function WorkingProcess() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [revealed, setRevealed] = useState(false);
-  const [activeStep, setActiveStep] = useState<number | null>(null);
+  const [activeStep, setActiveStep] = useState(1);
+  const [isPaused, setIsPaused] = useState(false);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setRevealed(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.08 }
-    );
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
+    const obs = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) { setRevealed(true); obs.disconnect(); }
+    }, { threshold: 0.05 });
+    if (sectionRef.current) obs.observe(sectionRef.current);
+    return () => obs.disconnect();
   }, []);
+
+  useEffect(() => {
+    if (!revealed || isPaused) return;
+    const timer = setInterval(() => {
+      setActiveStep(prev => (prev === 8 ? 1 : prev + 1));
+    }, 4500);
+    return () => clearInterval(timer);
+  }, [revealed, isPaused]);
+
+  const actStep = STEPS.find(s => s.id === activeStep) || STEPS[0];
 
   return (
     <section className="wp-section" ref={sectionRef}>
-      {/* Background */}
-      <div className="wp-bg-grid" />
-      <div className="wp-bg-blob wp-blob-1" />
-      <div className="wp-bg-blob wp-blob-2" />
-      <div className="wp-scanlines" />
+
+      {/* Canvas animation */}
+      <WpCanvas />
+
+      {/* Background mesh */}
+      <div className="wp-mesh" />
+      <div className="wp-blob wp-blob-a" />
+      <div className="wp-blob wp-blob-b" />
       <div className="wp-noise" />
 
       <div className="wp-container">
 
-        {/* ── Header ── */}
-        <div className={`wp-header wp-reveal ${revealed ? "wp-revealed" : ""}`}>
+        {/* ── HEADER ── */}
+        <div className={`wp-header wp-fade ${revealed ? "wp-in" : ""}`}>
           <div className="wp-eyebrow">
             <span className="wp-eyebrow-dot" />
-            Our Workflow
+            <span>Our Workflow</span>
           </div>
-          <h2 className="wp-heading">
+          <h2 className="wp-h2">
             Our Approach to{" "}
-            <span className="wp-heading-accent">Success</span>
+            <span className="wp-h2-accent">Success</span>
           </h2>
-          <p className="wp-subheading">
-            A structured development lifecycle designed to turn complex visions into
-            seamless, high-performing digital realities.
+          <p className="wp-lead">
+            A structured development lifecycle designed to turn complex visions
+            into seamless, high-performing digital realities — every time.
           </p>
         </div>
 
-        {/* ── Cards Grid ── */}
-        <div className="wp-grid">
-          {steps.map((step, idx) => (
-            <div
-              key={step.id}
-              className={`wp-reveal wp-card-outer ${revealed ? "wp-revealed" : ""}`}
-              style={{ transitionDelay: `${idx * 80}ms` }}
-            >
-              {/* SVG Connector arrow between cards */}
-              {idx % 4 !== 3 && idx < 7 && (
-                <div className={`wp-connector ${revealed ? "live" : ""}`}>
-                  <svg viewBox="0 0 60 20" className="wp-conn-svg">
-                    <line x1="0" y1="10" x2="48" y2="10" className="wp-conn-line" />
-                    <polyline points="40,4 52,10 40,16" className="wp-conn-arrow" />
-                    <circle className="wp-conn-dot" r="3" cx="0" cy="10">
-                      <animateMotion dur="1.8s" repeatCount="indefinite" path="M0,0 H48" />
-                    </circle>
-                  </svg>
-                </div>
-              )}
-
-              <div
-                className={`wp-card ${activeStep === step.id ? "active" : ""}`}
-                onMouseEnter={() => setActiveStep(step.id)}
-                onMouseLeave={() => setActiveStep(null)}
-              >
-                {/* Background large number */}
-                <div className="wp-bg-num">{String(step.id).padStart(2, "0")}</div>
-
-                {/* Top glow line */}
-                <div className="wp-card-topline" />
-
-                {/* Step badge */}
-                <div className="wp-step-badge">
-                  <span className="wp-step-badge-dot" />
-                  {String(step.id).padStart(2, "0")}
-                </div>
-
-                {/* Icon */}
-                <div className="wp-icon-wrap">
-                  <div className="wp-icon-glow" />
-                  {step.icon}
-                </div>
-
-                {/* Content */}
-                <h3 className="wp-card-title">{step.title}</h3>
-                <p className="wp-card-desc">{step.description}</p>
-
-                {/* Expandable detail */}
-                <div className="wp-card-detail">
-                  <div className="wp-detail-divider" />
-                  <p className="wp-detail-text">{step.detail}</p>
-                </div>
-
-                {/* Per-card progress bar */}
-                <div className="wp-card-progress">
-                  <div
-                    className="wp-card-progress-fill"
-                    style={{
-                      width: revealed ? `${(step.id / steps.length) * 100}%` : "0%",
-                      transitionDelay: `${0.5 + idx * 0.1}s`,
-                    }}
-                  />
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* ── Global progress track ── */}
-        <div
-          className={`wp-progress-track wp-reveal ${revealed ? "wp-revealed" : ""}`}
-          style={{ transitionDelay: "0.9s" }}
+        {/* ── SPLIT TAB LAYOUT (SHORT & UNIQUE) ── */}
+        <div 
+          className={`wp-split-view wp-fade ${revealed ? "wp-in" : ""}`}
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
         >
-          <span className="wp-progress-label">Process completion</span>
-          <div className="wp-progress-bar-wrap">
-            <div className={`wp-progress-fill ${revealed ? "animate" : ""}`} />
-            <div className={`wp-progress-glow ${revealed ? "animate" : ""}`} />
+          
+          {/* LEFT: Tabs */}
+          <div className="wp-tabs">
+            {STEPS.map((step) => {
+              const active = step.id === activeStep;
+              return (
+                <div 
+                  key={step.id} 
+                  onClick={() => setActiveStep(step.id)}
+                  className={`wp-tab ${active ? "active" : ""}`}
+                >
+                  <div className="wp-tab-line">
+                    <div className="wp-tab-line-fill" />
+                  </div>
+                  <div className="wp-tab-num">{step.num}</div>
+                  <div className="wp-tab-title">{step.title}</div>
+                </div>
+              );
+            })}
           </div>
-          <span className="wp-progress-pct">100%</span>
+
+          {/* RIGHT: Active Detail Panel */}
+          <div className="wp-display">
+            <div key={actStep.id} className="wp-display-card">
+              <div className="wp-display-watermark">{actStep.num}</div>
+              
+              <div className="wp-display-icon">
+                <div className="wp-icon-glow" />
+                {actStep.icon}
+              </div>
+              
+              <h3 className="wp-display-title">{actStep.title}</h3>
+              <p className="wp-display-short">{actStep.short}</p>
+              
+              <div className="wp-display-divider" />
+              
+              <p className="wp-display-long">{actStep.detail}</p>
+            </div>
+          </div>
+
         </div>
 
-      </div>
-      <div className="hero-scroll-indicator">
-        <div className="hero-scroll-mouse">
-          <div className="hero-scroll-wheel" />
+        {/* ── CTA ── */}
+        <div className={`wp-cta wp-fade ${revealed ? "wp-in" : ""}`} style={{ transitionDelay: "0.2s" }}>
+          <p>Ready to start your project?</p>
+          <a href="/contact" className="wp-cta-btn">
+            Start Discovery Call
+            <svg width="16" height="16" fill="none" viewBox="0 0 18 18">
+              <path d="M3.5 9h11M10 4.5L14.5 9 10 13.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </a>
         </div>
-        <span>Scroll to explore</span>
+
       </div>
     </section>
   );
-};
-
-export default WorkingProcess;
+}
