@@ -1,0 +1,11 @@
+{
+  "name": "acute-infotech",
+  "private": true,
+  "workspaces": [
+    "my-app"
+  ],
+  "scripts": {
+    "build": "npm run build --workspace my-app",
+    "vercel-build": "npm run build --workspace my-app"
+  }
+}
