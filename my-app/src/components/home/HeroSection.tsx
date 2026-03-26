@@ -146,7 +146,7 @@ function CountUp({ end, suffix }: { end: number; suffix: string }) {
 
 // ─── Main Hero ───────────────────────────────────────────────────
 export default function HeroSection() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
   useOrbitCanvas(canvasRef);
 
   const [slide, setSlide]           = useState(0);

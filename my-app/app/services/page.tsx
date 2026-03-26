@@ -97,7 +97,7 @@ const NavArrow = () => (
 
 /* ─── PARTICLE CANVAS ─────────────────────────────────────────────── */
 const ParticleCanvas: React.FC = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const mouseRef = useRef({ x: 0.5, y: 0.5 });
 
   useEffect(() => {
